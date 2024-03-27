@@ -25,7 +25,7 @@ Why IAC? (Infrastructure as a code):
 4. they are everywhere 
 
 
-ARMTemplates Structure:
+ARMTemplates Structure:  https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/syntax
 ----------------------
 1. Schema           - Version of the JSON file
 2. ContentVersion   - to maintain the constant version across multiple templates (ex: 1.0.0.0)
@@ -37,6 +37,8 @@ ARMTemplates Structure:
 Getting started:
 ---------------
     https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/quickstart-create-templates-use-visual-studio-code
-    
+
 1. Install the vscode
 2. Azure Resource Manager (ARM) Tools extension
+
+ARMTemplates resources: https://learn.microsoft.com/en-us/azure/templates/
