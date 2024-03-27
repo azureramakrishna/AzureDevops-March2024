@@ -1,0 +1,42 @@
+Topics covered: 45 days
+--------------
+
+1. IAC (Infrastructure as a code)
+    ARMTemplates (JSON)
+    Terraform 
+2. AzureDevops (SAAS)
+    Azure Boards (agile)
+    Azure repo (git & github)
+    Azure Pipelines (CI CD)
+        Classic editor (GUI)
+        YAML pipeline 
+3. Docker & Kubernets 
+    ACI (Azure container instance)
+    ACR (Azure container registry)
+    AKS (Azure Kubernets service)
+
+
+
+Why IAC? (Infrastructure as a code):
+-----------------------------------
+1. Automated way deployment 
+2. Repeatable
+3. Predictable
+4. they are everywhere 
+
+
+ARMTemplates Structure:
+----------------------
+1. Schema           - Version of the JSON file
+2. ContentVersion   - to maintain the constant version across multiple templates (ex: 1.0.0.0)
+3. Parameters       - expected values from end user during the deployment 
+4. Variables        - defined withing template file and cant modify during deployment 
+5. Resources        - resources that you want like storage, vm, sqldb, webapp etc
+6. Outputs          - values needed after resource creation (ex: vm ip address)
+
+Getting started:
+---------------
+    https://learn.microsoft.com/en-us/azure/azure-resource-manager/templates/quickstart-create-templates-use-visual-studio-code
+    
+1. Install the vscode
+2. Azure Resource Manager (ARM) Tools extension
