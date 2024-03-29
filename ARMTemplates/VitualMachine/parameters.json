@@ -1,0 +1,28 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtual_machine_name": {
+            "value": "arm-vm"
+        },
+        "virtual_machine_size": {
+            "value": "Standard_ds1_v2"
+        },
+        "adminUser": {
+            "reference": {
+                "keyVault": {
+                  "id": "/subscriptions/2e28c82c-17d7-4303-b27a-4141b3d4088f/resourceGroups/sql-group/providers/Microsoft.KeyVault/vaults/saanvikitkv123"
+                },
+                "secretName": "WinVMUser"
+              }
+        },
+        "adminPassword": {
+            "reference": {
+                "keyVault": {
+                  "id": "/subscriptions/2e28c82c-17d7-4303-b27a-4141b3d4088f/resourceGroups/sql-group/providers/Microsoft.KeyVault/vaults/saanvikitkv123"
+                },
+                "secretName": "WinVMPassword"
+              }
+        }
+    }
+}
