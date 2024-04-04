@@ -9,7 +9,7 @@ variable "location" {
 }
 
 variable "client_secret" {
-  type = string
+  
 }
 
 variable "storage_account_name" {
