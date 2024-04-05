@@ -94,3 +94,12 @@ vscode extensions:
 - Hashicorp terraform
 - Azure terraform
 
+
+Terraform data sources:
+----------------------
+
+RG
+VNET
+SNET
+KEYVAULT
+

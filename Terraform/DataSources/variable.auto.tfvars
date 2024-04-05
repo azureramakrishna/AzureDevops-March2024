@@ -1,0 +1,7 @@
+storage_account_name        = "saanvikitsa202435"
+network_security_group_name = "saanvikit-nsg"
+network_interface_name      = "saanvikit-nic"
+public_ip_name              = "saanvikit-pip"
+virtual_machine_name        = "saanvikit-vm"
+virtual_machine_size        = "Standard_D2S_V3"
+AdminUser                   = "ramakrishna"

@@ -1,0 +1,168 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = "3.70.0"
+    }
+  }
+}
+
+# Configure the Microsoft Azure Provider
+provider "azurerm" {
+  features {}
+
+  client_id       = "8bc612f2-e9cb-4597-88d8-d6275a088f73"
+  client_secret   = var.client_secret
+  tenant_id       = "459865f1-a8aa-450a-baec-8b47a9e5c904"
+  subscription_id = "2e28c82c-17d7-4303-b27a-4141b3d4088f"
+}
+
+# Terraform backend
+terraform {
+  backend "azurerm" {
+    resource_group_name  = "storage-account-resource-group"
+    storage_account_name = "saanvikit20240118"
+    container_name       = "tfstate"
+    key                  = "data.terraform.tfstate"
+  }
+}
+
+
+# Create a resource group
+# resource "azurerm_resource_group" "rg" {
+#   name     = var.rsource_group_name
+#   location = var.location
+# }
+
+
+
+
+# Create a storage account
+resource "azurerm_storage_account" "sa" {
+  name                     = lower(var.storage_account_name)
+  resource_group_name      = data.azurerm_resource_group.rg.name
+  location                 = data.azurerm_resource_group.rg.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+
+  tags = var.tags
+}
+
+# Create a Virtual Network
+# resource "azurerm_virtual_network" "vnet" {
+#   name                = var.virtual_network_name
+#   address_space       = var.virtual_network_address
+#   location            = azurerm_resource_group.rg.location
+#   resource_group_name = azurerm_resource_group.rg.name
+#   tags                = var.tags
+# }
+
+
+# Create a subnet
+# resource "azurerm_subnet" "snet" {
+#   depends_on           = [azurerm_virtual_network.vnet, azurerm_network_security_group.nsg]
+#   name                 = var.subnet_name
+#   resource_group_name  = azurerm_resource_group.rg.name
+#   virtual_network_name = azurerm_virtual_network.vnet.name
+#   address_prefixes     = var.subnet_address
+# }
+
+
+
+# Create a Network security group
+resource "azurerm_network_security_group" "nsg" {
+  name                = var.network_security_group_name
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+
+  security_rule {
+    name                       = "RDP"
+    priority                   = 100
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "3389"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+
+  tags = var.tags
+}
+
+# Network security group association with subnet
+resource "azurerm_subnet_network_security_group_association" "nsg-snet" {
+  depends_on                = [data.azurerm_subnet.snet, azurerm_network_security_group.nsg]
+  subnet_id                 = data.azurerm_subnet.snet.id
+  network_security_group_id = azurerm_network_security_group.nsg.id
+}
+
+# Create a public ip
+resource "azurerm_public_ip" "pip" {
+  name                = var.public_ip_name
+  resource_group_name = data.azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+  allocation_method   = "Static"
+
+  tags = var.tags
+}
+
+# Create a network interface
+resource "azurerm_network_interface" "nic" {
+  depends_on          = [data.azurerm_virtual_network.vnet, azurerm_public_ip.pip]
+  name                = var.network_interface_name
+  location            = data.azurerm_resource_group.rg.location
+  resource_group_name = data.azurerm_resource_group.rg.name
+
+  ip_configuration {
+    name                          = "internal"
+    subnet_id                     = data.azurerm_subnet.snet.id
+    private_ip_address_allocation = "Dynamic"
+    public_ip_address_id          = azurerm_public_ip.pip.id
+  }
+}
+
+resource "azurerm_windows_virtual_machine" "vm" {
+  depends_on          = [azurerm_network_interface.nic]
+  name                = var.virtual_machine_name
+  resource_group_name = data.azurerm_resource_group.rg.name
+  location            = data.azurerm_resource_group.rg.location
+  size                = var.virtual_machine_size
+  admin_username      = var.AdminUser
+  admin_password      = data.azurerm_key_vault_secret.example.value
+  tags                = var.tags
+  network_interface_ids = [
+    azurerm_network_interface.nic.id,
+  ]
+
+  os_disk {
+    name                 = "${var.virtual_machine_name}-osdisk"
+    caching              = "ReadWrite"
+    storage_account_type = "Standard_LRS"
+  }
+
+  source_image_reference {
+    publisher = "MicrosoftWindowsServer"
+    offer     = "WindowsServer"
+    sku       = "2022-Datacenter"
+    version   = "latest"
+  }
+}
+
+# Create a datadisk
+resource "azurerm_managed_disk" "datadisk" {
+  name                 = "${var.virtual_machine_name}-disk1"
+  location             = data.azurerm_resource_group.rg.location
+  resource_group_name  = data.azurerm_resource_group.rg.name
+  storage_account_type = "Standard_LRS"
+  create_option        = "Empty"
+  disk_size_gb         = 10
+}
+
+# Attach the data disk to vm
+resource "azurerm_virtual_machine_data_disk_attachment" "example" {
+  managed_disk_id    = azurerm_managed_disk.datadisk.id
+  virtual_machine_id = azurerm_windows_virtual_machine.vm.id
+  lun                = "10"
+  caching            = "ReadWrite"
+}
