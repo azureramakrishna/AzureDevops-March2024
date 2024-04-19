@@ -103,4 +103,77 @@ VNET
 SNET
 KEYVAULT
 
-Ph~8Q~~8Dbv6cZJE.75UBbRrsUDLOglSBHkKgcxN
+
+
+AzureDevops:
+-----------
+
+Azure Boards:
+------------
+
+Processes
+    Basic
+    Agile
+    Scrum
+    CMMI
+
+Epic
+feature
+userstory
+task
+issue
+
+Sprint1 (Iterations) Model - 2 weeks duration  April 15th - April 26th
+Sprint2                                        April 29th - May 10th
+
+Sprint planning 
+    capacity planning
+    User stories
+    Task - 16hr
+
+Daily standup calls - 10 to 15mins
+
+Retrospective:
+
+what went well
+what can be improved
+what didn't went well
+
+
+
+Epic        develop an applcation like Amazon
+Feature     signup page 
+Backlog     login page
+            home page 
+            products catelog
+            add to cart
+            payment gateway
+            tracking 
+            help + support
+
+Userstory   signup page for amazon
+            loging page
+
+
+Task        singup page with google
+            singup page with apple id
+            signup page with email and password
+
+            login with google account
+            login with apple id
+            login with email and password
+
+Issue
+
+
+
+Git & GitHub:
+------------
+Download git: https://git-scm.com/downloads
+
+
+
+git clone https://Saanvikit-March24@dev.azure.com/Saanvikit-March24/Iac/_git/Iac
+
+Git commands:
+https://confluence.atlassian.com/bitbucketserver/basic-git-commands-776639767.html
