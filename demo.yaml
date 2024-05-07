@@ -1,0 +1,27 @@
+---
+TrainingModule: AzureDevops
+TrainerName: Ramakrishna
+ContactNumber: 9513184144
+CompanyName: 'SAANVIK IT Technologies'
+Address: 
+- location: Gachibowly
+  City: Hyderabad
+  State: TS
+  Country: India
+  Pincode: 123456
+
+Particitpatns: 
+- Name: Abhay
+  Location: Bangalore
+  IsAzureAdmin: true 
+  ContactNumber: 12345677
+
+- Name: Dheeraj
+  Location: Vizag
+  IsAzureAdmin: true 
+  ContactNumber: 12345677
+
+- Name: Ornes
+  Location: Mumbai
+  IsAzureAdmin: true 
+  ContactNumber: 12345677

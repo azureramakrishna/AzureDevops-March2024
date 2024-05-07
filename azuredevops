@@ -284,3 +284,139 @@ ARMTemplates using azure pipelines.
 Azure pipelines
     - Classic editor
     - YAML pipeline (pipeline as a code)
+
+
+Deploying a Java application:
+----------------------------
+
+Create the Azure infrastructure:
+
+#Launch the Azure Cloud Shell from the portal. To deploy to a resource group, enter the following command
+
+az group create --name MyResourceGroup --location westus
+
+#To create an App service plan
+
+az appservice plan create --resource-group MyResourceGroup --name MyPlan --sku S1
+
+#Create the web app with a unique app name
+
+az webapp create --resource-group MyResourceGroup --plan MyPlan --name Myshutle2024
+
+#Finally, create the MySQL server with a unique server name.
+
+az mysql server create --resource-group MyResourceGroup --name myshuttlesqldbserver --admin-user mysqldbuser --admin-password P2ssw0rd@123 --sku-name GP_Gen5_2
+
+
+servername: myshuttlesqldbserver.mysql.database.azure.com
+
+server admin login name: mysqldbuser@myshuttlesqldbserver
+
+jdbc:mysql://myshuttlesqldbserver.mysql.database.azure.com:3306/myshuttlesqldbserver?useSSL=true&requireSSL=false; myDbConn = DriverManager.getConnection(url, "mysqldbuser@myshuttlesqldbserver", P2ssw0rd@123);
+
+Maven - Java 
+MSBuild - .net
+
+
+Docker:
+------
+
+1  whoami
+    2  # Add Docker's official GPG key:
+    3  sudo apt-get update
+    4  sudo apt-get install ca-certificates curl
+    5  sudo install -m 0755 -d /etc/apt/keyrings
+    6  sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+    7  sudo chmod a+r /etc/apt/keyrings/docker.asc
+    8  # Add the repository to Apt sources:
+    9  echo   "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+   10    $(. /etc/os-release && echo "$VERSION_CODENAME") stable" |   sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+   11  sudo apt-get update
+   12  terraform
+   13  docker
+   14  sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
+   15  docker
+   16  systemctl status docker
+   17  docker run hello-world
+   18  docker images
+   19  docker ps
+   20  docker ps -a
+   21  docker images
+   22  docker run ubuntu
+   23  docker images
+   24  docker ps
+   25  docker ps -a
+   26  systemctl stop docker
+   27  systemctl status docker
+   28  docker images
+   29  docker run redis
+   30  docker version
+   31  docker images
+   32  systemctl status docker
+   33  docker images
+   34  docker pull ubuntu:20.04
+   35  docker images
+   36  docker run --name firstcontainer -itd ubuntu:20.04
+   37  docker ps
+   38  docker attach 65c3
+   39  docker ps
+   40  docker ps -a
+   41  docker start firstcontainer
+   42  docker ps
+   43  docker attach 65c3
+   44  docker ps
+   45  docker run --name secondcontainer -it ubuntu:22.04
+   46  docker ps
+   47  docker attach d886
+   48  docker images
+   49  docker ps
+   50  docker ps -a
+   51  docker images
+   52  docker run --name demo -it ubuntu
+   53  docker ps
+   54  docker commit 0270 customubuntu:1.0
+   55  docker images
+   56  docker run --name testcontainer -it customubuntu:1.0
+   57  docker ps
+   58  docker images
+   59  docker tag customubuntu:1.0 saanvikitmarch2024/ubuntu:1.0
+   60  docker images
+   61  docker login
+   62  docker push saanvikitmarch2024/ubuntu:1.0
+   63  dockerps
+   64  docker ps
+   65  docker attach bccf
+   66  docker ps
+   67  docker commit bccf saanvikitmarch2024/ubuntu:2.0
+   68  docker images
+   69  docker push saanvikitmarch2024/ubuntu:2.0
+   70  docker rmi saanvikitmarch2024/ubuntu:2.0
+   71  docker images
+   72  docker run --name test2 -itd saanvikitmarch2024/ubuntu:2.0
+   73  docker ps
+   74  docker ps -a
+   75  docker rm 38f2
+   76  docker ps -a
+   77  docker rm d886 65c3 76dd 1a3b
+   78  docker ps -a
+   79  docker rm 0270
+   80  docker stop 0270
+   81  docker ps -a
+   82  docker rm 0270
+   83  docker ps -a
+   84  docker images
+   85  docker rmi bf3dc08bfed0 2abc4dfd8318 52882761a72a 9509c4dd19fb  d2c94e258dcb
+   86  docker imges
+   87  docker images
+   88  docker inspect 7592fd99a591
+   89  docker ps
+   90  docker stats
+   91  docker ps
+   92  docker stats 13f9
+   94  vi dockerfile
+   95  cat dockerfile
+   96  docker build -t demoubuntu:1.0 .
+   97  docker images
+   98  docker tag demoubuntu:1.0 saanvikitmarch2024/demoubuntu:1.0
+   99  docker images
+  100  docker push saanvikitmarch2024/demoubuntu:1.0

@@ -13,7 +13,7 @@
 
     "Participants": [
         {
-            "Name": "Abhay",
+            "Name":"Abhay",
             "location": "Bangalore",
             "IsAzureAdmin": true,
             "ContactNumber": 12345678
